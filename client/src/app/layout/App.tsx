@@ -1,43 +1,48 @@
-import { useEffect, useState } from "react"
-import type { Product } from "../models/Product";
+import {  useState } from "react"
+import { Box, Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import NavBar from "./NavBar";
+import { Outlet } from "react-router-dom";
 
 
 
 
 function App() {
-  const[products,setProducts]=useState<Product[]>([])
+ 
 
-  useEffect(()=>{
-      fetch("https://localhost:5001/api/products")
-      .then(response=>response.json())
-      .then(data =>setProducts(data));
-  },[])
+  const [darkMode,setDarkMode]=useState(false);
+  const palleteType=darkMode?'dark':'light'
 
-  const addProduct=()=>{
-    setProducts(prevState =>[...prevState,
-      {
-        id:prevState.length+1,
-        name:'Product'+(prevState.length+1),
-        price:(prevState.length*100)+100,
-        quantityInStock:100,
-        description:'test',
-        pictureUrl:'test',
-        type:'test',
-        brand:'test' 
+  const theme=createTheme({
+    palette:{
+      mode:palleteType,
+      background:{
+        default:(palleteType==='light')?'#eaeaea':'#121212'
+      }
+    }
+  })
 
-    }]);
+
+  const toggleDarkMode=()=>{
+    setDarkMode(!darkMode)
   }
 
   return (
-   <div>
-    <h1>Restore</h1>
-    <ul>
-      {products.map((item,index)=>(
-        <li key={index}>{item.name}-{item.price}</li>
-      ))}
-    </ul>
-    <button onClick={addProduct}>Add product</button>
-   </div>
+    <ThemeProvider theme={theme}>
+       <CssBaseline />
+       <NavBar toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>
+       <Box sx={{minHeight:'100vh',background:darkMode?
+        'radial-gradient(circle,#1e3aBa,#111B27)':
+        'radial-gradient(circle,#baecf9,#f0f9ff)',
+        py:6
+       }}>
+            <Container maxWidth='xl' sx={{mt:8}} >
+        <Outlet/>
+      </Container>
+
+       </Box>
+    
+    </ThemeProvider>
+
   )
 }
 
