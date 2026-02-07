@@ -3,13 +3,15 @@ import { catalogApi } from "../../features/catalog/catalogAPI";
 
 import { useDispatch, useSelector } from "react-redux";
 import { uiSlice } from "../layout/uiSlice";
+import { errorApi } from "../../features/about/errorApi";
 
 export const store=configureStore({
     reducer:{
+        [errorApi.reducerPath]:errorApi.reducer,
         [catalogApi.reducerPath]:catalogApi.reducer,
         ui:uiSlice.reducer
     },
-    middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(catalogApi.middleware)
+    middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(errorApi.middleware,catalogApi.middleware)
 });
 
 

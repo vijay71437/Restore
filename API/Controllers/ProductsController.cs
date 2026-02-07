@@ -7,9 +7,8 @@ using Microsoft.VisualBasic;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController(StoreContext context) : ControllerBase
+
+    public class ProductsController(StoreContext context) : BaseApiController   
     {
         private readonly StoreContext context = context;
 
