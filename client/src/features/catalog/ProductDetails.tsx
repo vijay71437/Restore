@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
 import {
   Button,
@@ -13,23 +13,16 @@ import {
   Container,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import type { Product } from "../../app/models/Product";
+
+import { useGetProductQuery } from "./catalogAPI";
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
+  const {data:product, isLoading} = useGetProductQuery(id ? parseInt(id!):0);
 
-  useEffect(() => {
-    fetch(`https://localhost:5001/api/products/${id}`)
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to fetch product");
-        return response.json();
-      })
-      .then((data: Product) => setProduct(data))
-      .catch((error) => console.error(error));
-  }, [id]);
 
-  if (!product) return <Typography>Loading...</Typography>;
+
+  if (!product ||isLoading) return <Typography>Loading...</Typography>;
 
   const productDetails = [
     { label: "Name", value: product.name },
@@ -101,4 +94,4 @@ export default function ProductDetails() {
       </Grid>
     </Container>
   );
-}
+} 
