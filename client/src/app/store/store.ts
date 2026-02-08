@@ -1,17 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { catalogApi } from "../../features/catalog/catalogAPI";
+import { catalogApi } from "../../features/catalog/catalogApi";
 
 import { useDispatch, useSelector } from "react-redux";
 import { uiSlice } from "../layout/uiSlice";
 import { errorApi } from "../../features/about/errorApi";
+import { basketApi } from "../../features/basket/basketApi";
 
 export const store=configureStore({
     reducer:{
         [errorApi.reducerPath]:errorApi.reducer,
         [catalogApi.reducerPath]:catalogApi.reducer,
+        [basketApi.reducerPath]:basketApi.reducer,
         ui:uiSlice.reducer
     },
-    middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(errorApi.middleware,catalogApi.middleware)
+    middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(errorApi.middleware,catalogApi.middleware,basketApi.middleware)
 });
 
 

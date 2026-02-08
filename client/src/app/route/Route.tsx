@@ -7,17 +7,21 @@ import AboutPage from "../../features/about/AboutPage";
 import ContactPage from "../../features/contact/ContactPage";
 import ServerError from "../errors/ServerError";
 import NotFound from "../errors/NotFound";
+import BasketPage from "../../features/basket/BasketPage";
+import CheckOutPage from "../../features/checkout/CheckOutPage";
 
 export const router=createBrowserRouter([{
     path:'/',element:<App/>,
     children:[
         {path:'',element:<HomePage/>},
-          {path:'/catalog',element:<Catalog/>},
-            {path:'/catalog/:id',element:<ProductDetails/>},
-              {path:'/about',element:<AboutPage/>},
-                {path:'/contact',element:<ContactPage/>},
-                {path:'/server-error',element:<ServerError/>},
-                {path:'/not-found',element:<NotFound/>},
-                {path:'*',element:<Navigate replace to='/not-found'/>},
+        {path:'/catalog',element:<Catalog/>},
+        {path:'/catalog/:id',element:<ProductDetails/>},
+        {path:'/about',element:<AboutPage/>},
+        {path:'/contact',element:<ContactPage/>},
+        {path:'/basket',element:<BasketPage/>},
+        {path:'/server-error',element:<ServerError/>},
+        {path:'/not-found',element:<NotFound/>},
+        {path:'/checkout',element:<CheckOutPage/>},
+        {path:'*',element:<Navigate replace to='/not-found'/>},
     ]
 }])
